@@ -16,8 +16,11 @@ add_library(apriltags ${SOURCE_FILES})
 
 pods_install_libraries(apriltags)
 
-file(GLOB_RECURSE header_files "src/*.h")
+file(GLOB header_files "src/*.h")
+file(GLOB common_header_files "src/common/*.h")
+
 pods_install_headers(${header_files} DESTINATION AprilTags/)
+pods_install_headers(${common_header_files} DESTINATION AprilTags/common/)
 
 pods_install_pkg_config_file(apriltags
     LIBS -lapriltags
