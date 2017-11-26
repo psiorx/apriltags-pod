@@ -1,28 +1,41 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.3)
 project(apriltags)
 
+find_package(catkin REQUIRED COMPONENTS)
 
-set(POD_NAME apriltags)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
-include(cmake/pods.cmake)
+catkin_package(LIBRARIES ${PROJECT_NAME} 
+  INCLUDE_DIRS
+    include
+  CATKIN_DEPENDS)
 
-file(GLOB_RECURSE SOURCE_FILES "src/*.c")
+include_directories(
+  include/apriltags
+  include/apriltags/common
+)
 
-include_directories(src)
-include_directories(src/common)
-
-include_directories(AprilTags . /opt/local/include)
-add_library(apriltags ${SOURCE_FILES})
-
-pods_install_libraries(apriltags)
-
-file(GLOB header_files "src/*.h")
-file(GLOB common_header_files "src/common/*.h")
-
-pods_install_headers(${header_files} DESTINATION AprilTags/)
-pods_install_headers(${common_header_files} DESTINATION AprilTags/common/)
-
-pods_install_pkg_config_file(apriltags
-    LIBS -lapriltags
-    VERSION 1.0.0)
-
+add_library(${PROJECT_NAME} 
+	src/apriltag.c
+	src/apriltag_demo.c
+	src/apriltag_quad_thresh.c
+	src/g2d.c
+	src/tag16h5.c
+	src/tag25h7.c
+	src/tag25h9.c
+	src/tag36artoolkit.c
+	src/tag36h10.c
+	src/tag36h11.c
+	src/common/getopt.c
+	src/common/homography.c
+	src/common/image_f32.c
+	src/common/image_u32.c
+	src/common/image_u8.c
+	src/common/matd.c
+	src/common/pnm.c
+	src/common/string_util.c
+	src/common/svd22.c
+	src/common/time_util.c
+	src/common/unionfind.c
+	src/common/workerpool.c
+	src/common/zarray.c
+	src/common/zhash.c
+	src/common/zmaxheap.c)
